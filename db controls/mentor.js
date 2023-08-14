@@ -15,3 +15,6 @@ export async function findAssignedStudents(id){
     }
     return out;
 }
+export function getAllMentors(){
+    return client.db("node-3").collection("mentors").find().toArray()
+}
