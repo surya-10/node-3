@@ -15,11 +15,11 @@ router.post("/add-student", async (req, res) => {
     try {
         let data = req.body;
         if (!data) {
-            return res.status(400).send({ message: "invalid input" })
+            return res.status(400).send({ success: false, message: "invalid input" })
         }
         let student = await createStudent(data);
         if (!student.acknowledged) {
-            return res.status(400).send({ message: "Error to add mentor" })
+            return res.status(400).send({ success: false, message: "Error to add mentor" })
         }
         return res.status(201).send("Student created successfully")
     }
