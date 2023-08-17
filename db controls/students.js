@@ -46,3 +46,6 @@ export async function findPreviousMentor(id){
     }
     return out;
 }
+export function deletStud(id){
+    return client.db("node-3").collection("students").findOneAndDelete({stud_id:id});
+}

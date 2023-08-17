@@ -21,7 +21,7 @@ router.post("/add-student", async (req, res) => {
         if (!student.acknowledged) {
             return res.status(400).json({ success: false, message: "Error to add mentor" })
         }
-        return res.status(201).send("Student created successfully")
+        return res.status(201).json({message:"creeted success", data})
     }
     catch (error) {
         return res.status(500).send({ message: "server error" });
@@ -142,7 +142,18 @@ router.get("/previous-mentor/:id", async(req, res)=>{
     }
     
 })
-
+router.delete("/delete/:id", async(req, res)=>{
+    try {
+        let {id} = req.params;
+        if(!id){
+            return res.status(400).send({message:"student id cannot be empty"});
+        }
+        let result = await deletStud(id);
+        console.log(result);
+    } catch (error) {
+        return res.status(500).send({ message: "server error" });
+    }
+})
 
 
 router.post("/add-mentor", async (req, res) => {
