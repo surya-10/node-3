@@ -31,6 +31,9 @@ router.put("/edit-stud", async(req, res)=>{
     try {
         let {mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name} = req.body;
         // console.log(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name);
+        if(!stud_id){
+            return res.status(400).json({message:"Please provide student ID"})
+        }
         let result = await editStud(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name);
         res.send(result);
         
