@@ -35,7 +35,7 @@ router.put("/edit-stud", async(req, res)=>{
             return res.status(400).json({message:"Please provide student ID"})
         }
         let result = await editStud(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name);
-        res.send(result);
+        res.send(result.value);
         
     } catch (error) {
         return res.status(500).send({ message: "server error" });
