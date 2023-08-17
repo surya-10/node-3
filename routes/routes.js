@@ -145,7 +145,7 @@ router.get("/previous-mentor/:id", async(req, res)=>{
 router.delete("/delete/:id", async(req, res)=>{
     try {
         let {id} = req.params;
-        console.log(id);
+        // console.log(id);
         if(!id){
             return res.status(400).send({message:"student id cannot be empty"});
         }
