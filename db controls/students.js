@@ -46,6 +46,8 @@ export async function findPreviousMentor(id){
     }
     return out;
 }
-export function deleteStud(id){
-    return client.db("node-3").collection("students").deleteOne({stud_id:id})
+export async function deleteStud(id){
+    let a = await client.db("node-3").collection("students").deleteOne({stud_id:id})
+    let b = await client.db("node-3").collection("students").findOne({stud_id:id})
+    console.log(a, b)
 }
