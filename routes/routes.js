@@ -1,6 +1,6 @@
 import express from "express";
 import { createMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
-import { assignMentor, createStudent, deleteStud, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
+import { assignMentor, createStudent, deleteStud, editStud, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
 
 let router = express.Router();
 
@@ -24,6 +24,17 @@ router.post("/add-student", async (req, res) => {
         return res.status(201).json({message:"creeted success", data})
     }
     catch (error) {
+        return res.status(500).send({ message: "server error" });
+    }
+})
+router.put("/edit-stud", async(req, res)=>{
+    try {
+        let {mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name} = req.body;
+        // console.log(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name);
+        let result = await editStud(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name);
+        res.send(result);
+        
+    } catch (error) {
         return res.status(500).send({ message: "server error" });
     }
 })

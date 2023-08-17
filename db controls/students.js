@@ -53,3 +53,11 @@ export function deleteStud(id){
     // let b = await client.db("node-3").collection("students").findOne({stud_id:id})
     
 }
+
+export function editStud(mentor_id, newMentorAssigned, newMentorId, new_mentor, previous_mentor, stud_id, student_name){
+    stud_id = +stud_id;
+    mentor_id= +mentor_id;
+    newMentorId = +newMentorId;
+    // console.log(stud_id)
+    return client.db("node-3").collection("students").findOneAndUpdate({stud_id:stud_id}, {$set:{mentor_id:mentor_id, newMentorAssigned:newMentorAssigned, newMentorId:newMentorId, new_mentor:new_mentor, previous_mentor:previous_mentor, stud_id:stud_id, student_name:student_name}});
+}
