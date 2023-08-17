@@ -1,6 +1,6 @@
 import express from "express";
 import { createMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
-import { assignMentor, createStudent, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
+import { assignMentor, createStudent, deleteStud, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
 
 let router = express.Router();
 
@@ -145,11 +145,13 @@ router.get("/previous-mentor/:id", async(req, res)=>{
 router.delete("/delete/:id", async(req, res)=>{
     try {
         let {id} = req.params;
+        console.log(id);
         if(!id){
             return res.status(400).send({message:"student id cannot be empty"});
         }
-        let result = await deletStud(id);
-        console.log(result);
+        let result = await deleteStud(id);
+        // console.log(result);
+        res.send(result.acknowledged)
     } catch (error) {
         return res.status(500).send({ message: "server error" });
     }
