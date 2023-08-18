@@ -18,3 +18,8 @@ export async function findAssignedStudents(id){
 export function getAllMentors(){
     return client.db("node-3").collection("mentors").find().toArray()
 }
+
+export function deleteMentor(id){
+    id = +id;
+    return client.db("node-3").collection("mentors").deleteOne({mentor_id:id})
+}

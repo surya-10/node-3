@@ -1,5 +1,5 @@
 import express from "express";
-import { createMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
+import { createMentor, deleteMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
 import { assignMentor, createStudent, deleteStud, editStud, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
 
 let router = express.Router();
@@ -131,6 +131,21 @@ router.get("/assigned-student/:id", async(req, res)=>{
             return res.send({message:"no students assigned to this mentor"})
         }
         return res.status(200).send(assignedStudents.student);
+    } catch (error) {
+        return res.status(500).send({ message: "server error" });
+    }
+})
+
+router.delete("/delete-mentor/:id", async(req, res)=>{
+    try {
+        let {id} = req.params;
+        // console.log(id);
+        if(!id){
+            return res.status(400).send({message:"student id cannot be empty"});
+        }
+        let result = await deleteMentor(id);
+        // console.log(result);
+        res.send(result.acknowledged)
     } catch (error) {
         return res.status(500).send({ message: "server error" });
     }
