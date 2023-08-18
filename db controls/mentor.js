@@ -1,8 +1,12 @@
 import { client } from "../db.js";
 import { ObjectId } from "bson";
 
-export function createMentor(data){
-    return client.db("node-3").collection("mentors").insertOne(data)
+export async function createMentor(data){
+    let a = await client.db("node-3").collection("mentors").insertOne(data)
+    let id = data.mentor_id;
+    // console.log(id);
+    let findData = await client.db("node-3").collection("mentors").findOne({mentor_id:id})
+    return findData;
 }
 export function findMentor(name, id){
     return client.db("node-3").collection("mentors").findOne({$and:[{mentor_name:name}, {mentor_id:id}]});    
