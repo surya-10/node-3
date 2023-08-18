@@ -193,14 +193,20 @@ router.delete("/delete/:id", async(req, res)=>{
 router.post("/add-mentor", async (req, res) => {
     try {
         let mentor = req.body;
+        mentor.student = mentor.student.split(" ");
+        mentor.student = mentor.student.map((val)=>{
+            return {"studentName":val}
+        })
+        console.log(mentor.student);
         if (!mentor) {
             return res.status(400).send({ message: "invalid input" })
         }
-        let out = await createMentor(mentor);
-        if (!out.acknowledged) {
-            return res.status(400).send({ message: "Error to add mentor" })
-        }
-        return res.status(201).send("Mentor created successfully")
+
+        // let out = await createMentor(mentor);
+        // if (!out.acknowledged) {
+        //     return res.status(400).send({ message: "Error to add mentor" })
+        // }
+        // return res.status(201).send("Mentor created successfully")
     } catch (error) {
         return res.status(500).send({ message: "server error" });
     }
