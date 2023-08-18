@@ -141,10 +141,13 @@ router.delete("/delete-mentor/:id", async(req, res)=>{
         let {id} = req.params;
         // console.log(id);
         if(!id){
-            return res.status(400).send({message:"student id cannot be empty"});
+            return res.status(400).send({message:"mentor id cannot be empty"});
         }
         let result = await deleteMentor(id);
         // console.log(result);
+        if(!result.acknowledged){
+            return res.status(400).json({message:"Mentor id is incorrrect"})
+        }
         res.send(result.acknowledged)
     } catch (error) {
         return res.status(500).send({ message: "server error" });
