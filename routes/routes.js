@@ -1,5 +1,5 @@
 import express from "express";
-import { createMentor, deleteMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
+import { createMentor, deleteMentor, editMentor, findAssignedStudents, findMentor, getAllMentors } from "../db controls/mentor.js";
 import { assignMentor, createStudent, deleteStud, editStud, findPreviousMentor, findStud, getAllstudents, updateMentor, withoutMentor } from "../db controls/students.js";
 
 let router = express.Router();
@@ -220,6 +220,23 @@ router.get("/all-mentors", async(req, res)=>{
         //     return res.status(400).send({message:"No data available"});
         // }
         return res.status(200).send(mentor);
+    } catch (error) {
+        return res.status(500).send({ message: "server error" });
+    }
+})
+
+
+//edit mentor data
+
+router.put("/update-mentor", async(req, res)=>{
+    try {
+        let mentor = req.body;
+         mentor.student = mentor.student.split(" ");
+        mentor.student = mentor.student.map((val)=>{
+            return {"studentName":val}
+        })
+        let result = await editMentor(mentor);
+        res.status(200).send(result);
     } catch (error) {
         return res.status(500).send({ message: "server error" });
     }

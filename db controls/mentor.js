@@ -1,5 +1,6 @@
 import { client } from "../db.js";
 import { ObjectId } from "bson";
+import { studentRouter } from "../routes/routes.js";
 
 export async function createMentor(data){
     let a = await client.db("node-3").collection("mentors").insertOne(data)
@@ -26,4 +27,12 @@ export function getAllMentors(){
 export function deleteMentor(id){
     id = +id;
     return client.db("node-3").collection("mentors").deleteOne({mentor_id:id})
+}
+
+export function editMentor(mentor){
+    let id = mentor.mentor_id;
+    let name = mentor.mentor_name;
+    let email = mentor.email;
+    let stud = mentor.student;
+    return client.db("node-3").collection("mentors").updateOne({mentor_id:id}, {$set:{mentor_name:name, mentor_email:email, student:stud}})
 }
